@@ -10,8 +10,8 @@ use std::borrow::Borrow;
 
 #[derive(Debug)]
 struct Input {
-    min: u8,
-    max: u8,
+    min: usize,
+    max: usize,
     character: char,
     text: String,
 }
@@ -62,14 +62,10 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let mut count = 0;
     for input in &inputs {
-        let mut char_count = 0;
-        for char in input.text.chars() {
-            if char == input.character {
-                char_count += 1;
-                // println!("{}", char_count);
-            }
-        }
-        if (input.min..=input.max).contains(&char_count) {
+        let b1 = input.text.chars().nth(input.min - 1).unwrap_or(' ') == input.character;
+        let b2 = input.text.chars().nth(input.max - 1).unwrap_or(' ') == input.character;
+
+        if b1 ^ b2 {
             count += 1;
         }
     }
