@@ -6,7 +6,6 @@ use std::str::FromStr;
 use std::string::ParseError;
 use std::time::Instant;
 use lazy_static::lazy_static;
-use std::borrow::Borrow;
 
 #[derive(Debug)]
 struct Input {
@@ -17,25 +16,25 @@ struct Input {
 }
 
 lazy_static! {
-    static ref inputRegex: Regex = Regex::new(r"(\d+)-(\d+) (\w): (\w+)").unwrap();
+    static ref INPUT_REGEX: Regex = Regex::new(r"(\d+)-(\d+) (\w): (\w+)").unwrap();
 }
 
-// impl FromStr for Input<'_> {
-//     type Err = ParseError;
-//
-//
-//     fn from_str(text: &str) -> Result<Self, Self::Err> {
-//         let cap = inputRegex.captures(text)?;
-//         Ok(
-//             Input {
-//                 min: cap[1].parse::<u8>()?,
-//                 max: cap[2].parse::<u8>()?,
-//                 character: cap[3].parse()?,
-//                 text: &cap[4].to_string(),
-//             }
-//         )
-//     }
-// }
+impl FromStr for Input {
+    type Err = ParseError;
+
+
+    fn from_str(text: &str) -> Result<Self, Self::Err> {
+        let cap = INPUT_REGEX.captures(text).unwrap();
+        Ok(
+            Input {
+                min: cap[1].parse().unwrap(),
+                max: cap[2].parse().unwrap(),
+                character: cap[3].parse().unwrap(),
+                text: cap[4].parse().unwrap(),
+            }
+        )
+    }
+}
 
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -45,14 +44,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut inputs: Vec<Input> = Vec::new();
 
     for line in reader.lines().map(|x| x.unwrap()) {
-        let cap = inputRegex.captures(&line).unwrap();
-        let input = Input {
-            min: cap[1].parse()?,
-            max: cap[2].parse()?,
-            character: cap[3].parse()?,
-            text: cap[4].parse()?,
-        };
-        inputs.push(input);
+        inputs.push(Input::from_str(&line)?);
     }
 
     println!("size: {}", &inputs.len());
