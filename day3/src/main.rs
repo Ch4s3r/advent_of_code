@@ -1,18 +1,13 @@
+#![feature(iterator_fold_self)]
+
 use std::error::Error;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
-use regex::Regex;
-use std::str::FromStr;
-use std::string::ParseError;
-use std::time::Instant;
-use lazy_static::lazy_static;
 
 #[derive(Debug)]
-struct Map {
+struct Point {
     x: usize,
     y: usize,
-    width: usize,
-    height: usize,
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -25,21 +20,27 @@ fn main() -> Result<(), Box<dyn Error>> {
         forest_map.push(line.chars().collect::<Vec<char>>());
     }
 
-    let mut pos = Map { x: 0, y: 0, width: forest_map[0].len(), height: forest_map.len() };
 
-    let mut count = 0;
-
-    loop {
-        pos.x += 1;
-        pos.y = (pos.y + 3) % pos.width;
-        if pos.x == pos.height {
-            break;
+    let steps = vec![(1, 1), (1, 3), (1, 5), (1, 7), (2, 1)];
+    let mut counts = Vec::new();
+    for (step_x, step_y) in steps {
+        let mut pos = Point { x: 0, y: 0 };
+        let mut count = 0u64;
+        let width = forest_map[0].len();
+        let height = forest_map.len();
+        loop {
+            pos.x += step_x;
+            pos.y = (pos.y + step_y) % width;
+            if pos.x >= height {
+                break;
+            }
+            if forest_map[pos.x][pos.y] == '#' {
+                count += 1;
+            }
         }
-        if forest_map[pos.x][pos.y] == '#' {
-            count += 1;
-        }
+        counts.push(count);
     }
-    dbg!(count);
 
+    dbg!(counts.iter().fold(1, |acc, x| acc * x));
     Ok(())
 }
