@@ -10,8 +10,8 @@ const MANDATORY_ATTRIBUTES: [&str; 7] = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl
 lazy_static! {
     static ref HGT_REGEX: Regex = Regex::new(r"(\w+)(in|cm)").unwrap();
     static ref HCL_REGEX: Regex = Regex::new(r"^#[0-9a-f]{6}$").unwrap();
-    static ref ECL_REGEX: Regex = Regex::new(r"^amb|blu|brn|gry|grn|hzl|oth$").unwrap();
-    static ref PID_REGEX: Regex = Regex::new(r"^\w{9}$").unwrap();
+    static ref ECL_REGEX: Regex = Regex::new(r"^(amb|blu|brn|gry|grn|hzl|oth)$").unwrap();
+    static ref PID_REGEX: Regex = Regex::new(r"^\d{9}$").unwrap();
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -57,7 +57,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             match *attribute {
                 "byr" => {
                     let year = attribute_value.parse::<i32>().unwrap_or(0);
-                    if (1920..=2020).contains(&year) {
+                    if (1920..=2002).contains(&year) {
                         valid_passport_attributes += 1
                     }
                 }
