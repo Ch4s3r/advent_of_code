@@ -5,6 +5,7 @@ use std::io::{BufReader, BufRead};
 use std::error::Error;
 use std::convert::{TryFrom};
 use std::num::ParseIntError;
+use std::process::id;
 
 #[derive(Debug)]
 struct Seat {
@@ -46,14 +47,22 @@ fn main() -> Result<(), Box<dyn Error>> {
     let file = File::open("data/input.txt")?;
     let reader = BufReader::new(file);
 
-    let mut max_id = 0;
+    let mut ids: Vec<i32> = Vec::new();
     for seat in reader.lines().filter_map(Result::ok) {
         let parsed_seat = Seat::try_from(seat)?;
-        max_id = max_id.max(parsed_seat.id);
-        // dbg!(seat.id);
+        ids.push(parsed_seat.id);
     }
-    dbg!(max_id);
+    ids.sort();
 
+    let min = ids.first().unwrap();
+
+    for (index, id) in ids.iter().enumerate() {
+        let i = index as i32 + min;
+        if (i) != *id {
+            dbg!(i, id);
+            break;
+        }
+    }
 
     Ok(())
 }
