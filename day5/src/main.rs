@@ -3,10 +3,7 @@
 use std::fs::File;
 use std::io::{BufReader, BufRead};
 use std::error::Error;
-use std::convert::{TryFrom, TryInto};
-use std::string::ParseError;
-use std::option::NoneError;
-use std::ops::Shl;
+use std::convert::{TryFrom};
 use std::num::ParseIntError;
 
 #[derive(Debug)]
