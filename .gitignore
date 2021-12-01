@@ -2,5 +2,5 @@
 .idea
 debug/
 target/
-Cargo.lock
+2021/day1/part1/Cargo.lock
 **/*.rs.bk
