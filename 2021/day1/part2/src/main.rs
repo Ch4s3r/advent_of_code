@@ -1,9 +1,10 @@
+use std::env;
 use std::error::Error;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let file = File::open("../data/input.txt")?;
+    let file = File::open("data/input.txt")?;
     let reader = BufReader::new(file);
 
     let mut numbers: Vec<i32> = Vec::new();
