@@ -1,26 +1,54 @@
-use std::env;
-use std::error::Error;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
+use std::str::FromStr;
 
-fn main() -> Result<(), Box<dyn Error>> {
+use anyhow::Context;
+use strum_macros::{EnumString, EnumVariantNames};
+
+use Direction::{DOWN, UP, FORWARD};
+
+#[derive(Debug)]
+struct Input {
+    direction: Direction,
+    units: u32,
+}
+
+#[derive(Debug, PartialEq, EnumString, EnumVariantNames)]
+#[strum(serialize_all = "lowercase")]
+enum Direction {
+    FORWARD,
+    DOWN,
+    UP,
+}
+
+fn parse_line(input: &str) -> anyhow::Result<Input> {
+    let (direction, units) = input.split_once(" ").context("failed to split")?;
+    Ok(Input { direction: Direction::from_str(direction)?, units: units.parse()? })
+}
+
+fn main() -> anyhow::Result<()> {
     let file = File::open("data/input.txt")?;
     let reader = BufReader::new(file);
 
-    let mut numbers: Vec<i32> = Vec::new();
+    let mut horizontal: u32 = 0;
+    let mut depth: u32 = 0;
+    let mut aim: u32 = 0;
 
-    for line in reader.lines() {
-        let number = line?.parse()?;
-        numbers.push(number);
-    }
+    reader
+        .lines()
+        .filter_map(|result| { result.ok() })
+        .filter_map(|line| { parse_line(line.as_str()).ok() })
+        .for_each(|input| {
+            match input.direction {
+                FORWARD => {
+                    horizontal += input.units;
+                    depth += aim * input.units;
+                }
+                DOWN => { aim += input.units; }
+                UP => { aim -= input.units; }
+            }
+        });
 
-    let mut count = 0;
-    let windows = numbers.windows(3).map(|number_window| {
-        number_window.iter().sum()
-    }).collect::<Vec<i32>>();
-    for window in windows.windows(2) {
-        if window[0] < window[1] { count += 1; }
-    }
-    println!("count: {}", count);
+    dbg!(horizontal, depth, horizontal * depth);
     Ok(())
 }

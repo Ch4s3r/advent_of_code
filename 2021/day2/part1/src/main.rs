@@ -5,9 +5,7 @@ use std::str::FromStr;
 use anyhow::Context;
 use strum_macros::{EnumString, EnumVariantNames};
 
-use Direction::{DOWN, UP};
-
-use crate::Direction::FORWARD;
+use Direction::{DOWN, UP, FORWARD};
 
 #[derive(Debug)]
 struct Input {
@@ -23,12 +21,10 @@ enum Direction {
     UP,
 }
 
-
 fn parse_line(input: &str) -> anyhow::Result<Input> {
     let (direction, length) = input.split_once(" ").context("failed to split")?;
     Ok(Input { direction: Direction::from_str(direction)?, length: length.parse()? })
 }
-
 
 fn main() -> anyhow::Result<()> {
     let file = File::open("data/input.txt")?;
