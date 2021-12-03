@@ -1,0 +1,10 @@
+[package]
+name = "day1"
+version = "0.1.0"
+authors = ["Ch4s3r <lamprecht.patrick1@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+strum = "0.23.0"
+strum_macros = "0.23"
+anyhow = "1.0.48"
