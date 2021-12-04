@@ -24,15 +24,21 @@ fn main() -> anyhow::Result<()> {
 
 fn calculate(mut input: Vec<&str>, rating_type: RatingType) -> anyhow::Result<&str> {
     for i in 0.. {
-        let (ones, zeroes): (Vec<_>, Vec<_>) = input.iter().partition(|line| {
-            line.chars().nth(i) == Some('1')
-        });
+        let (ones, zeroes): (Vec<_>, Vec<_>) = input
+            .iter()
+            .partition(|line| line.chars().nth(i) == Some('1'));
         let comparator = match rating_type {
-            OXYGEN => { usize::ge }
-            CO2 => { usize::lt }
+            OXYGEN => usize::ge,
+            CO2 => usize::lt,
         };
-        input = if comparator(&ones.len(), &zeroes.len()) { ones } else { zeroes };
-        if input.len() == 1 { break; }
+        input = if comparator(&ones.len(), &zeroes.len()) {
+            ones
+        } else {
+            zeroes
+        };
+        if input.len() == 1 {
+            break;
+        }
     }
     Ok(input.get(0).context("no element left")?)
 }
