@@ -29,14 +29,11 @@ fn calculate(mut input: Vec<&str>, rating_type: RatingType) -> anyhow::Result<&s
             line.chars().nth(count) == Some('1')
         });
         count += 1;
-        input = match rating_type {
-            OXYGEN => {
-                if ones.len() >= zeroes.len() { ones } else { zeroes }
-            }
-            CO2 => {
-                if ones.len() < zeroes.len() { ones } else { zeroes }
-            }
-        }
+        let comparator = match rating_type {
+            OXYGEN => { usize::ge }
+            CO2 => { usize::lt }
+        };
+        input = if comparator(&ones.len(), &zeroes.len()) { ones } else { zeroes }
     }
     Ok(input.get(0).context("no element left")?)
 }
