@@ -1,32 +1,54 @@
---- Day 3: Binary Diagnostic ---
-The submarine has been making some odd creaking noises, so you ask it to produce a diagnostic report just in case.
+--- Day 4: Giant Squid ---
+You're already almost 1.5km (almost a mile) below the surface of the ocean, already so deep that you can't see any sunlight. What you can see, however, is a giant squid that has attached itself to the outside of your submarine.
 
-The diagnostic report (your puzzle input) consists of a list of binary numbers which, when decoded properly, can tell you many useful things about the conditions of the submarine. The first parameter to check is the power consumption.
+Maybe it wants to play bingo?
 
-You need to use the binary numbers in the diagnostic report to generate two new binary numbers (called the gamma rate and the epsilon rate). The power consumption can then be found by multiplying the gamma rate by the epsilon rate.
+Bingo is played on a set of boards each consisting of a 5x5 grid of numbers. Numbers are chosen at random, and the chosen number is marked on all boards on which it appears. (Numbers may not appear on all boards.) If all numbers in any row or any column of a board are marked, that board wins. (Diagonals don't count.)
 
-Each bit in the gamma rate can be determined by finding the most common bit in the corresponding position of all numbers in the diagnostic report. For example, given the following diagnostic report:
+The submarine has a bingo subsystem to help passengers (currently, you and the giant squid) pass the time. It automatically generates a random order in which to draw numbers and a random set of boards (your puzzle input). For example:
 
-00100
-11110
-10110
-10111
-10101
-01111
-00111
-11100
-10000
-11001
-00010
-01010
-Considering only the first bit of each number, there are five 0 bits and seven 1 bits. Since the most common bit is 1, the first bit of the gamma rate is 1.
+7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
 
-The most common second bit of the numbers in the diagnostic report is 0, so the second bit of the gamma rate is 0.
+22 13 17 11  0
+8  2 23  4 24
+21  9 14 16  7
+6 10  3 18  5
+1 12 20 15 19
 
-The most common value of the third, fourth, and fifth bits are 1, 1, and 0, respectively, and so the final three bits of the gamma rate are 110.
+3 15  0  2 22
+9 18 13 17  5
+19  8  7 25 23
+20 11 10 24  4
+14 21 16 12  6
 
-So, the gamma rate is the binary number 10110, or 22 in decimal.
+14 21 17 24  4
+10 16 15  9 19
+18  8 23 26 20
+22 11 13  6  5
+2  0 12  3  7
+After the first five numbers are drawn (7, 4, 9, 5, and 11), there are no winners, but the boards are marked as follows (shown here adjacent to each other to save space):
 
-The epsilon rate is calculated in a similar way; rather than use the most common bit, the least common bit from each position is used. So, the epsilon rate is 01001, or 9 in decimal. Multiplying the gamma rate (22) by the epsilon rate (9) produces the power consumption, 198.
+22 13 17 11  0         3 15  0  2 22        14 21 17 24  4
+8  2 23  4 24         9 18 13 17  5        10 16 15  9 19
+21  9 14 16  7        19  8  7 25 23        18  8 23 26 20
+6 10  3 18  5        20 11 10 24  4        22 11 13  6  5
+1 12 20 15 19        14 21 16 12  6         2  0 12  3  7
+After the next six numbers are drawn (17, 23, 2, 0, 14, and 21), there are still no winners:
 
-Use the binary numbers in your diagnostic report to calculate the gamma rate and epsilon rate, then multiply them together. What is the power consumption of the submarine? (Be sure to represent your answer in decimal, not binary.)
+22 13 17 11  0         3 15  0  2 22        14 21 17 24  4
+8  2 23  4 24         9 18 13 17  5        10 16 15  9 19
+21  9 14 16  7        19  8  7 25 23        18  8 23 26 20
+6 10  3 18  5        20 11 10 24  4        22 11 13  6  5
+1 12 20 15 19        14 21 16 12  6         2  0 12  3  7
+Finally, 24 is drawn:
+
+22 13 17 11  0         3 15  0  2 22        14 21 17 24  4
+8  2 23  4 24         9 18 13 17  5        10 16 15  9 19
+21  9 14 16  7        19  8  7 25 23        18  8 23 26 20
+6 10  3 18  5        20 11 10 24  4        22 11 13  6  5
+1 12 20 15 19        14 21 16 12  6         2  0 12  3  7
+At this point, the third board wins because it has at least one complete row or column of marked numbers (in this case, the entire top row is marked: 14 21 17 24 4).
+
+The score of the winning board can now be calculated. Start by finding the sum of all unmarked numbers on that board; in this case, the sum is 188. Then, multiply that sum by the number that was just called when the board won, 24, to get the final score, 188 * 24 = 4512.
+
+To guarantee victory against the giant squid, figure out which board will win first. What will your final score be if you choose that board?
