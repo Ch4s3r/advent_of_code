@@ -1,25 +1,30 @@
-use std::error::Error;
-use std::fs::File;
-use std::io::{BufRead, BufReader};
+#![feature(slice_take)]
 
-fn main() -> Result<(), Box<dyn Error>> {
-    let file = File::open("data/input.txt")?;
-    let reader = BufReader::new(file);
+use anyhow::Result;
+use itertools::Itertools;
+use nom::character::complete;
+use nom::character::complete::newline;
+use nom::multi::separated_list1;
+use nom::sequence::tuple;
+use nom::IResult;
 
-    let mut numbers: Vec<i32> = Vec::new();
+fn main() -> Result<()> {
+    let input = include_str!("../data/input.txt");
+    let numbers = dbg!(parse_input(input))?.1;
+    let highest_calories = dbg!(numbers
+        .into_iter()
+        .map(|number_block| number_block.iter().fold(0, |acc, x| acc + x))
+        .sorted_unstable_by_key(|x| -x)
+        .collect_vec());
 
-    for line in reader.lines() {
-        let number = line?.parse()?;
-        numbers.push(number);
-    }
-
-    let mut count = 0;
-    let windows = numbers.windows(3).map(|number_window| {
-        number_window.iter().sum()
-    }).collect::<Vec<i32>>();
-    for window in windows.windows(2) {
-        if window[0] < window[1] { count += 1; }
-    }
-    println!("count: {}", count);
+    println!("{:?}", dbg!(highest_calories).iter().take(3).sum::<i32>());
     Ok(())
+}
+
+fn parse_input(input: &str) -> IResult<&str, Vec<Vec<i32>>> {
+    separated_list1(tuple((newline, newline)), parse_numbers)(input)
+}
+
+fn parse_numbers(input: &str) -> IResult<&str, Vec<i32>> {
+    separated_list1(newline, complete::i32)(input)
 }

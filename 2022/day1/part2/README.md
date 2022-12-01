@@ -1,36 +1,12 @@
 --- Part Two ---
-Considering every single measurement isn't as useful as you expected: there's just too much noise in the data.
 
-Instead, consider sums of a three-measurement sliding window. Again considering the above example:
+By the time you calculate the answer to the Elves' question, they've already realized that the Elf carrying the most
+Calories of food might eventually run out of snacks.
 
-199 A      
-200 A B    
-208 A B C  
-210 B C D
-200 E C D
-207 E F D
-240 E F G  
-269 F G H
-260 G H
-263 H
-Start by comparing the first and second three-measurement windows. The measurements in the first window are marked A (
-199, 200, 208); their sum is 199 + 200 + 208 = 607. The second window is marked B (200, 208, 210); its sum is 618. The
-sum of measurements in the second window is larger than the sum of the first, so this first comparison increased.
+To avoid this unacceptable situation, the Elves would instead like to know the total Calories carried by the top three
+Elves carrying the most Calories. That way, even if one of those Elves runs out of snacks, they still have two backups.
 
-Your goal now is to count the number of times the sum of measurements in this sliding window increases from the previous
-sum. So, compare A with B, then compare B with C, then C with D, and so on. Stop when there aren't enough measurements
-left to create a new three-measurement sum.
+In the example above, the top three Elves are the fourth Elf (with 24000 Calories), then the third Elf (with 11000
+Calories), then the fifth Elf (with 10000 Calories). The sum of the Calories carried by these three elves is 45000.
 
-In the above example, the sum of each three-measurement window is as follows:
-
-A: 607 (N/A - no previous sum)
-B: 618 (increased)
-C: 618 (no change)
-D: 617 (decreased)
-E: 647 (increased)
-F: 716 (increased)
-G: 769 (increased)
-H: 792 (increased)
-In this example, there are 5 sums that are larger than the previous sum.
-
-Consider sums of a three-measurement sliding window. How many sums are larger than the previous sum?
+Find the top three Elves carrying the most Calories. How many Calories are those Elves carrying in total?
