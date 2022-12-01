@@ -10,12 +10,12 @@ fn main() -> Result<()> {
     let input = include_str!("../data/input.txt");
     let numbers = dbg!(parse_input(input))?.1;
     let highest_calories = dbg!(numbers
-        .into_iter()
-        .map(|number_block| number_block.iter().fold(0, |acc, x| acc + x))
-        .sorted_unstable_by_key(|x| -x)
+        .iter()
+        .map(|number_block| number_block.iter().sum())
+        .sorted_unstable()
+        .rev()
         .collect_vec());
-
-    println!("{:?}", dbg!(highest_calories).iter().take(3).sum::<i32>());
+    println!("{:?}", dbg!(&highest_calories).iter().take(3).sum::<i32>());
     Ok(())
 }
 
