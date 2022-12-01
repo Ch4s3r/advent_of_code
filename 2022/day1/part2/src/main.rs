@@ -1,5 +1,3 @@
-#![feature(slice_take)]
-
 use anyhow::Result;
 use itertools::Itertools;
 use nom::character::complete;
