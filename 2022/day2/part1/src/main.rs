@@ -42,7 +42,7 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-fn app(input: &str) -> Result<()> {
+fn app(input: &str) -> Result<i32> {
     let games = parse_input(input).unwrap().1;
     let points = dbg!(games
         .iter()
@@ -50,7 +50,7 @@ fn app(input: &str) -> Result<()> {
         .collect_vec());
     let total_points: i32 = points.iter().sum();
     dbg!(total_points);
-    Ok(())
+    Ok(total_points)
 }
 
 fn parse_input(input: &str) -> IResult<&str, Vec<Game>> {
@@ -93,5 +93,20 @@ impl Game {
             return player_points + 3;
         }
         player_points
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn example() -> Result<()> {
+        let input = "A Y
+B X
+C Z";
+        let actual = app(input)?;
+        assert_eq!(15, actual);
+        Ok(())
     }
 }
