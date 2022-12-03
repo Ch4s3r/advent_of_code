@@ -37,7 +37,7 @@ impl FromStr for HandType {
 }
 
 fn main() -> Result<()> {
-    let input = include_str!("../data/input_test.txt");
+    let input = include_str!("../data/input.txt");
     app(input)?;
     Ok(())
 }
