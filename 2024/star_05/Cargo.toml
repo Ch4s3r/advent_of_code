@@ -1,0 +1,8 @@
+[package]
+name = "star_05"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+aoc-parse = "0.2.18"
+regex = "1.11.1"
