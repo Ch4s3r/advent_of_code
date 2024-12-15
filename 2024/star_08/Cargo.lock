@@ -1732,7 +1732,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "star_05"
+name = "star_08"
 version = "0.1.0"
 dependencies = [
  "aoc-parse",
