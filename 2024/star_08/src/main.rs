@@ -3,9 +3,7 @@ use polars::export::num::ToPrimitive;
 use polars::prelude::*;
 use std::fs;
 
-fn get_field(input: &Vec<Vec<char>>, x: i64, y: i64) -> char {
-    let Some(x) = x.to_usize() else { return '.' };
-    let Some(y) = y.to_usize() else { return '.' };
+fn get_field(input: &Vec<Vec<char>>, x: usize, y: usize) -> char {
     let Some(y) = input.get(y) else { return '.' };
     let Some(x) = y.get(x) else { return '.' };
     x.to_owned()
@@ -17,8 +15,8 @@ fn main() {
     let parser = parser!(lines(repeat_sep(any_char, "")));
     let input = parser.parse(&contents).unwrap();
 
-    let height = input.len().to_i64().unwrap();
-    let width = input[0].len().to_i64().unwrap();
+    let height = input.len();
+    let width = input[0].len();
     let mut score = 0;
 
     for y in 0..height {
