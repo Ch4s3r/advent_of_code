@@ -6,6 +6,7 @@ edition = "2024"
 [dependencies]
 aoc-parse = "0.2.18"
 itertools = "0.13.0"
+polars = "0.45.1"
 
 [profile.release]
 strip = true
