@@ -1,4 +1,3 @@
-use itertools::Itertools;
 use nom::{
     bytes::complete::{tag, take_while1},
     IResult,
