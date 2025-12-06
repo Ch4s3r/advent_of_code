@@ -1,7 +1,7 @@
 mod parser;
 
 use parser::parse_input_grid;
-use rayon::iter::{IntoParallelRefIterator, ParallelIterator, StepBy};
+use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use std::fs;
 
 fn main() {
