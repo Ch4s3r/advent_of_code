@@ -1,0 +1,4 @@
+   Compiling star_19 v0.1.0 (/Users/lampe/IdeaProjects/personal/advent_of_code/2025/star_20)
+    Finished `release` profile [optimized] target(s) in 0.26s
+     Running `target/release/star_19`
+Machine 1: 103 button presses
