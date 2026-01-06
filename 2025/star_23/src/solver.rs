@@ -183,9 +183,7 @@ pub fn solve(input: &Input) {
     let mut fitting_count = 0;
     let total_count = input.containers.len();
 
-    for (i, container) in input.containers.iter().enumerate() {
-        print!("Container {} ({}x{}): ", i, container.width, container.height);
-        
+    for (_i, container) in input.containers.iter().enumerate() {
         // Expand the counts into a list of shape indices to place
         let mut shapes_indices = Vec::new();
         for (shape_idx, &count) in container.shapes.iter().enumerate() {
@@ -209,12 +207,9 @@ pub fn solve(input: &Input) {
 
         let mut solver = Solver::new(container.width, container.height);
         if solver.solve_recursive(&shapes_to_place, None) {
-            println!("Fits!");
             fitting_count += 1;
-        } else {
-            println!("Does not fit.");
         }
     }
 
-    println!("\nSummary: {}/{} containers fit.", fitting_count, total_count);
+    println!("Summary: {}/{} containers fit.", fitting_count, total_count);
 }
